@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi Gestor | Gestión de tareas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">✓</span><span>Mi <span class="brand-light">Gestor</span></span></div>
+    <div class="side-label">ESPACIO DE TRABAJO</div>
+    <button class="nav-item active" id="navAll"><span>▦</span> Todas las tareas <span class="nav-count" id="sideTotal">0</span></button>
+    <button class="nav-item" id="navPending"><span>◷</span> Pendientes</button>
+    <button class="nav-item" id="navDone"><span>✓</span> Completadas</button>
+    <div class="sidebar-bottom"><div class="mini-card"><div class="mini-icon">↗</div><strong>Un paso a la vez.</strong><p>Organiza tus ideas y avanza hacia tus objetivos.</p></div><div class="user-row"><div class="avatar">MG</div><div><strong>Mi espacio</strong><small>Plan personal</small></div><span class="dots">•••</span></div></div>
+  </aside>
+  <main class="main-content">
+    <header class="topbar"><div class="breadcrumb">Mi espacio <span>/</span> <strong>Panel principal</strong></div><div class="top-actions"><span class="live-dot"></span><span class="system-label">Sistema activo</span><div class="avatar small">MG</div></div></header>
+    <section class="welcome"><div><p class="eyebrow" id="todayLabel">TU ESPACIO, A TU RITMO</p><h1>Haz que las cosas <span>sucedan.</span></h1><p class="subtitle">Un poco de organización puede cambiar todo tu día.</p></div><button class="primary-btn" id="openCreate"><span>＋</span> Nueva tarea</button></section>
+    <section class="stats-grid">
+      <article class="stat-card"><div class="stat-top"><span>Total de tareas</span><span class="stat-icon purple">▦</span></div><div class="stat-number" id="totalStat">0</div><div class="stat-foot">Tareas en tu espacio</div></article>
+      <article class="stat-card"><div class="stat-top"><span>Pendientes</span><span class="stat-icon orange">◷</span></div><div class="stat-number" id="pendingStat">0</div><div class="stat-foot">Por hacer</div></article>
+      <article class="stat-card"><div class="stat-top"><span>Completadas</span><span class="stat-icon green">✓</span></div><div class="stat-number" id="doneStat">0</div><div class="stat-foot">¡Buen trabajo!</div></article>
+      <article class="stat-card visits-card"><div class="stat-top"><span>Visitas registradas</span><span class="stat-icon blue">↗</span></div><div class="stat-number" id="visitsStat">—</div><div class="stat-foot" id="redisStatus">Conectando con Redis…</div></article>
+    </section>
+    <section class="task-section">
+      <div class="section-heading"><div><h2>Mis tareas</h2><p>Todo lo importante, en un solo lugar.</p></div><div class="task-tools"><label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Buscar tarea..."></label><select id="priorityFilter" aria-label="Filtrar por prioridad"><option value="todas">Todas las prioridades</option><option value="alta">Prioridad alta</option><option value="media">Prioridad media</option><option value="baja">Prioridad baja</option></select></div></div>
+      <div class="tabs"><button class="tab active" data-filter="todas">Todas <span id="allCount">0</span></button><button class="tab" data-filter="pendiente">Pendientes <span id="pendingCount">0</span></button><button class="tab" data-filter="completada">Completadas <span id="doneCount">0</span></button></div>
+      <div id="taskList" class="task-list"><div class="loading">Preparando tu espacio…</div></div>
+      <div class="list-footer"><span id="listSummary">0 tareas</span><span class="footer-note">Tus tareas se guardan automáticamente</span></div>
+    </section>
+    <footer class="page-footer">Hecho para ayudarte a avanzar <span>✦</span></footer>
+  </main>
+</div>
+<div class="modal-backdrop" id="modalBackdrop" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="closeModal" aria-label="Cerrar">×</button><p class="eyebrow">ORGANIZA TU DÍA</p><h2 id="modalTitle">Crear nueva tarea</h2><form id="taskForm"><label>Nombre de la tarea<input id="taskName" maxlength="140" required placeholder="Ej. Terminar el proyecto"></label><label>Descripción <span class="optional">(opcional)</span><textarea id="taskDescription" rows="3" placeholder="Agrega algunos detalles..."></textarea></label><label>Prioridad<select id="taskPriority"><option value="baja">Baja</option><option value="media" selected>Media</option><option value="alta">Alta</option></select></label><div class="form-actions"><button type="button" class="secondary-btn" id="cancelModal">Cancelar</button><button type="submit" class="primary-btn" id="saveTask">Guardar tarea</button></div></form></section></div>
+<div id="toast" class="toast" role="status"></div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
